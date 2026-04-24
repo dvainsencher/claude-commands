@@ -12,8 +12,15 @@ You are executing a full publish workflow. Follow each step carefully, stop on a
 Run: `git branch --show-current`
 
 If the current branch is **`main`** (or `master`):
-- ⚠️ Warn the user: "You are about to push and create a PR directly from `main`. This is unusual. Are you sure you want to continue?"
-- Wait for explicit confirmation before proceeding. If the user does not confirm, abort and explain what to do instead (create a feature branch).
+- Inspect the staged/unstaged changes and recent commits to understand what work is being published.
+- Based on that context, suggest a descriptive branch name (e.g. `feat/improve-hero-section`, `fix/cta-text`, `chore/update-dependencies`).
+- Ask the user: "You're on `main`. I suggest creating a new branch `<suggested-name>` before publishing. Create it now, or enter a different name? (Leave blank to push from `main` anyway.)"
+- If the user provides or accepts a branch name, run:
+  ```
+  git checkout -b <branch-name>
+  ```
+  Then continue to Step 2.
+- If the user explicitly chooses to push from `main`, continue to Step 2 without switching branches.
 
 ## Step 2 — Check for uncommitted changes
 
